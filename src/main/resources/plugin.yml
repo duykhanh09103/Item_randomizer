@@ -1,4 +1,4 @@
-name: Item Randomizer
+name: Item_Randomizer
 version: '${version}'
 main: github.duykhanh09103.item_randomizer
 api-version: '1.21'
