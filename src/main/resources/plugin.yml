@@ -8,7 +8,7 @@ description: randomize item every x second with bossbar on top!
 commands:
   ItemRand:
     description: The item randomize command
-    usage: /<command>
+    usage: /<command> [start|stop|setTimer|help]
     permission: item_randomizer.command
 
 permissions:
