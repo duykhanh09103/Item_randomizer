@@ -1,0 +1,17 @@
+name: Item Randomizer
+version: '${version}'
+main: github.duykhanh09103.item_randomizer
+api-version: '1.21'
+prefix: [ItemRand]
+authors: [duykhanh09103]
+description: randomize item every x second with bossbar on top!
+commands:
+  ItemRand:
+    description: The item randomize command
+    usage: /<command>
+    permission: item_randomizer.command
+
+permissions:
+  item_randomizer.command:
+    description: Allows you to using reconnect command!
+    default: true
