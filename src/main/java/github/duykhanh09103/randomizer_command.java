@@ -16,10 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 public class randomizer_command implements CommandExecutor, TabExecutor {
@@ -35,7 +32,7 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-
+        Map<String, Boolean> map = new HashMap<>();
      if(sender instanceof Player) {
          Player player = (Player) sender;
          String[] allCommand = {"start", "stop", "setTimer", "help"};
@@ -49,6 +46,7 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
          return true;
          }
          if(args[0].equalsIgnoreCase("start")){
+             map.clear();
              int timer = (int) plugin.config.get("Timer");
              if(timer<1){
                  player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE +" :"+ChatColor.RED+"Error: The timer cant be lower than 1! current timer: "+timer);
@@ -65,12 +63,18 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
              for(Player allplayer:Bukkit.getOnlinePlayers()){
                  bossBar.addPlayer(allplayer);
                  player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE +" :"+"Starting! The delay time is " +timer+"s");
+                 map.put(player.getName(),true);
              }
              new BukkitRunnable(){
                  int countdown = timer;
                  @Override
                  public void run() {
                           if(countdown>0){
+                              for(Player allplayer:Bukkit.getOnlinePlayers()){
+                                  if(!map.containsKey(allplayer.getName())){
+                                      bossBar.addPlayer(allplayer);
+                                  }
+                              }
                               bossBar.setTitle("Next Items: "+countdown+"s");
                               bossBar.setProgress((double) countdown / timer);
                               countdown--;
@@ -94,6 +98,7 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
              }
              Bukkit.getScheduler().cancelTasks(plugin);
              bossBar.removeAll();
+             map.clear();
              for(Player allplayer:Bukkit.getOnlinePlayers()){
                  allplayer.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE + " :"+ChatColor.GREEN+" Successfully stopping !");
              }
