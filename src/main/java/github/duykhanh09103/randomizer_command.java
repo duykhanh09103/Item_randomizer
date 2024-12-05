@@ -34,6 +34,8 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+
      if(sender instanceof Player) {
          Player player = (Player) sender;
          String[] allCommand = {"start", "stop", "setTimer", "help"};
@@ -62,6 +64,7 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
 
              for(Player allplayer:Bukkit.getOnlinePlayers()){
                  bossBar.addPlayer(allplayer);
+                 player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE +" :"+"Starting! The delay time is " +timer+"s");
              }
              new BukkitRunnable(){
                  int countdown = timer;
@@ -91,7 +94,9 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
              }
              Bukkit.getScheduler().cancelTasks(plugin);
              bossBar.removeAll();
-             player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE + " :"+ChatColor.GREEN+" Successfully stop all task!");
+             for(Player allplayer:Bukkit.getOnlinePlayers()){
+                 allplayer.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE + " :"+ChatColor.GREEN+" Successfully stopping !");
+             }
              isTaskRunning=false;
              return true;
          }
