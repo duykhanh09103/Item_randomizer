@@ -10,6 +10,7 @@ public final class item_randomizer extends JavaPlugin {
     public void onEnable() {
         this.getCommand("ItemRand").setExecutor(new randomizer_command(this));
         config.addDefault("Timer",10);
+        config.addDefault("CreateVoidWorldForPlaying",false);
     }
 
     @Override

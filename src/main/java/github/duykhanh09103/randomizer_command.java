@@ -2,22 +2,27 @@ package github.duykhanh09103;
 
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.boss.*;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.*;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
-import org.bukkit.Bukkit;
 
 
-public class randomizer_command implements CommandExecutor {
+public class randomizer_command implements CommandExecutor, TabExecutor {
 
     private final item_randomizer plugin ;
     private boolean isTaskRunning = false;
@@ -114,6 +119,19 @@ public class randomizer_command implements CommandExecutor {
          }
 
      }
+     else {
+         Bukkit.getServer().getLogger().info("[ItemRand] Server/console cannot use command!");
+     }
+
      return true;
+
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1) {
+            return Arrays.asList("start", "stop", "setTimer", "help"); // Provide options for the first argument
+        }
+        return new ArrayList<>(); // No further suggestions
     }
 }
