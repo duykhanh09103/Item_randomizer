@@ -9,6 +9,7 @@ public final class item_randomizer extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getCommand("ItemRand").setExecutor(new randomizer_command(this));
+        getServer().getPluginManager().registerEvents(new player_event(), this);
         config.addDefault("Timer",10);
         config.addDefault("CreateVoidWorldForPlaying",false);
     }

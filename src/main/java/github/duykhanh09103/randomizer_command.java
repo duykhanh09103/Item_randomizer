@@ -27,12 +27,9 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
     public randomizer_command(item_randomizer plugin) {
         this.plugin = plugin;
     }
-
-
+    public static Map<String, Boolean> map = new HashMap<>();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        Map<String, Boolean> map = new HashMap<>();
      if(sender instanceof Player) {
          Player player = (Player) sender;
          String[] allCommand = {"start", "stop", "setTimer", "help"};
@@ -80,12 +77,16 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
                               countdown--;
                           }
                           else {
-                              for (Player player : Bukkit.getOnlinePlayers()) {
-                                  ItemStack randomItem = new ItemStack(Material.values()[new Random().nextInt(Material.values().length)]);
-                                  player.getInventory().addItem(randomItem);
-                                  player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE + " : You have received " + new TranslatableComponent(randomItem.getTranslationKey()).toPlainText());
-                              }
-                              countdown = timer;
+                                  for (Player player : Bukkit.getOnlinePlayers()) {
+                                      Material randomMaterial = Material.values()[new Random().nextInt(Material.values().length)];
+                                      if(randomMaterial.isItem()){
+                                          ItemStack randomItem = new ItemStack(randomMaterial) ;
+                                          player.getInventory().addItem(randomItem);
+                                          player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE + " : You have received " + new TranslatableComponent(randomItem.getTranslationKey()).toPlainText());
+                                      }
+                                  }
+                                  countdown = timer;
+
                           }
                  }
              }.runTaskTimer(plugin, 0, 20L);
