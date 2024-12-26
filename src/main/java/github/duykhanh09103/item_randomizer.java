@@ -11,6 +11,10 @@ public final class item_randomizer extends JavaPlugin {
     private final File worldFile = new File(getDataFolder(),"Void_World.zip");
     @Override
     public void onEnable() {
+        config.addDefault("Timer",10);
+        config.addDefault("ConfirmReadWarning",false);
+        config.options().copyDefaults(true);
+        saveConfig();
         if(!worldFile.exists()){
             try {
                 saveResource("Void_World.zip",false);
@@ -25,9 +29,6 @@ public final class item_randomizer extends JavaPlugin {
         this.getCommand("ItemRand").setExecutor(new randomizer_command(this));
         this.getCommand("RandGameWorld").setExecutor(new randomGameWorld_command(this));
         getServer().getPluginManager().registerEvents(new player_event(this), this);
-        config.addDefault("Timer",10);
-        config.addDefault("ConfirmReadWarning",false);
-        saveConfig();
     }
 
     @Override
