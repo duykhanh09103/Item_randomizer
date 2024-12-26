@@ -11,3 +11,5 @@
 # How to use?
 - use ```/ItemRand help``` for help commamd!
 - use ```/RandGameWorld help``` for help commamd!
+# Wanna build it from source?
+run ```gradlew build```
