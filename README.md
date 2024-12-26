@@ -9,5 +9,5 @@
 
 
 # How to use?
-use ```/ItemRand help``` for help commamd!
-use ```/RandGameWorld help``` for help commamd!
+- use ```/ItemRand help``` for help commamd!
+- use ```/RandGameWorld help``` for help commamd!
