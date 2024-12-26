@@ -10,8 +10,12 @@ commands:
     description: The item randomize command
     usage: /itemrand [start|stop|setTimer|help]
     permission: item_randomizer.command
+  RandGameWorld:
+    description: The item randomize command
+    usage: /RandGameWorld [start|stop||help]
+    permission: item_randomizer.command
 
 permissions:
   item_randomizer.command:
-    description: Allows you to using reconnect command!
+    description: Allows you to using ItemRand and RandGameWorld command!
     default: true

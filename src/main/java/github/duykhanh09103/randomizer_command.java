@@ -22,7 +22,7 @@ import java.util.*;
 public class randomizer_command implements CommandExecutor, TabExecutor {
 
     private final item_randomizer plugin ;
-    private boolean isTaskRunning = false;
+    public static boolean isTaskRunning = false;
     BossBar bossBar = Bukkit.createBossBar("RandItem", BarColor.YELLOW, BarStyle.SEGMENTED_10);
     public randomizer_command(item_randomizer plugin) {
         this.plugin = plugin;
@@ -53,6 +53,10 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
              if(isTaskRunning){
                  player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE +" :"+ChatColor.RED+"Error: The items randomizer is already running! please stop it first");
              return true;
+             }
+             if(randomGameWorld_command.isRunning){
+                 player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE +" :"+ChatColor.RED+"Error: The Random Game World is running! please wait until the game is dont or force stop it!");
+                 return true;
              }
              bossBar.setProgress(1.0);
              isTaskRunning=true;
@@ -93,6 +97,10 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
            return true;
          }
          if(args[0].equalsIgnoreCase("stop")){
+             if(randomGameWorld_command.isRunning){
+                 player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE +" :"+ChatColor.RED+"Error: Random Game World is running! ");
+                 return true;
+             }
              if(!isTaskRunning){
                  player.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE +" :"+ChatColor.RED+"Error: Nothing running right now! ");
              return true;
