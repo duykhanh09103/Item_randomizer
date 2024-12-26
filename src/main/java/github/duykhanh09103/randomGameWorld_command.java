@@ -10,6 +10,7 @@ import org.bukkit.command.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
@@ -85,6 +86,11 @@ public class randomGameWorld_command implements CommandExecutor, TabExecutor {
                     playerLocationBeforePLaying.put(allPlayerArray[i],allPlayerArray[i].getLocation());
                     playerState.put(allPlayerArray[i],true);
                     allPlayerArray[i].setGameMode(GameMode.SURVIVAL);
+                    for(PotionEffect effects : allPlayerArray[i].getActivePotionEffects()){allPlayerArray[i].removePotionEffect(effects.getType());}
+                    //will change later bcuz getMaxHealth is deprecated
+                    allPlayerArray[i].setHealth(allPlayerArray[i].getMaxHealth());
+                    allPlayerArray[i].setSaturation(20);
+                    allPlayerArray[i].setFoodLevel(20);
                     //does not need this for now as invent does not sync edit:nvm it does what
                     allPlayerArray[i].getInventory().clear();
                 }
@@ -150,6 +156,12 @@ public class randomGameWorld_command implements CommandExecutor, TabExecutor {
                                 player.setGameMode(GameMode.SURVIVAL);
                                 player.teleport(playerLocationBeforePLaying.get(player));
                             }
+                            for(Player player:Bukkit.getOnlinePlayers()){
+                                if(player.getWorld()==Bukkit.getWorld("Void_World")){
+                                    Location location = Bukkit.getWorld("world").getSpawnLocation();
+                                    player.teleport(location);
+                                }
+                            }
                             try {
                                 isRunning= false;
                                 playingPlayer.clear();
@@ -181,6 +193,12 @@ public class randomGameWorld_command implements CommandExecutor, TabExecutor {
                    player.setGameMode(GameMode.SURVIVAL);
                    player.teleport(playerLocationBeforePLaying.get(player));
                }
+                for(Player player:Bukkit.getOnlinePlayers()){
+                    if(player.getWorld()==Bukkit.getWorld("Void_World")){
+                        Location location = Bukkit.getWorld("world").getSpawnLocation();
+                        player.teleport(location);
+                    }
+                }
                 try {
                     isRunning=false;
                     bossBar.removeAll();

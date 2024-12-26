@@ -22,12 +22,19 @@ public class player_event implements Listener {
     //for player left(delete the key so it can proper register next time)
     @EventHandler
     public void onPLayerQuit(PlayerQuitEvent event){
+        Map<Player,Boolean> playerState = randomGameWorld_command.playerState;
         Map<String, Boolean> map = randomizer_command.map;
         Player player = event.getPlayer();
-        if(!map.containsKey(player)){
+        if(map.containsKey(player)){
+            map.remove(player.getName());
             return;
         }
-        map.remove(player.getName());
+        if(playerState.containsKey(player)){
+            playerState.remove(player);
+            Location worldSpawn = Bukkit.getWorld("world").getSpawnLocation();
+            player.teleport(worldSpawn);
+        }
+
     };
 
     @EventHandler
@@ -37,6 +44,9 @@ public class player_event implements Listener {
         Map<Player,Boolean> playerState = randomGameWorld_command.playerState;
         if(!map.containsKey(player)){
           return;
+        }
+        if(playerState.size() == 1){
+            return;
         }
         //delay the event for 1 sec cuz red screen
         new BukkitRunnable(){
