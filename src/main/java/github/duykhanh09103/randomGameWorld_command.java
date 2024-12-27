@@ -241,7 +241,7 @@ public class randomGameWorld_command implements CommandExecutor, TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 1) {
-            return Arrays.asList("start", "stop", "setTimer", "help");
+            return Arrays.asList("start", "stop", "confirm", "help");
         }
         return new ArrayList<>();
     }
