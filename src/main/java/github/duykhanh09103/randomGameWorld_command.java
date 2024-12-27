@@ -29,6 +29,11 @@ public class randomGameWorld_command implements CommandExecutor, TabExecutor {
     BossBar bossBar = Bukkit.createBossBar("RandItem", BarColor.YELLOW, BarStyle.SEGMENTED_10);
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        String[] allCommand = {"start", "stop", "confirm", "help"};
+        if (strings.length == 0 ||Arrays.stream(allCommand).noneMatch(strings[0]::contains)) {
+            commandSender.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE + " :" + " Wrong usage! use /RandGameWorld help to show list of usage!");
+            return true;
+        }
         if (commandSender instanceof Player) {
         if(strings[0].equalsIgnoreCase("help")) {
                 //log warning
@@ -150,7 +155,7 @@ public class randomGameWorld_command implements CommandExecutor, TabExecutor {
                         if(playerState.size() == 1){
                             bossBar.removeAll();
                             for(Player winningPlayer : playerState.keySet()){
-                                for(Player allplayer:Bukkit.getOnlinePlayers()){allplayer.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&kCongrats &r "+winningPlayer.getName()+" &6YOU WONNNNNNNNN"));}
+                                for(Player allplayer:Bukkit.getOnlinePlayers()){allplayer.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Congrats &r"+winningPlayer.getName()+" &6YOU WONNNNNNNNN"));}
                             }
                             for(Player player:playingPlayer.keySet()){
                                 player.setGameMode(GameMode.SURVIVAL);
@@ -211,6 +216,7 @@ public class randomGameWorld_command implements CommandExecutor, TabExecutor {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+                return true;
 
             }
             if (strings[0].equalsIgnoreCase("confirm")) {
@@ -223,14 +229,20 @@ public class randomGameWorld_command implements CommandExecutor, TabExecutor {
                 config.set("ConfirmReadWarning",true);
                 plugin.saveConfig();
                 commandSender.sendMessage(ChatColor.YELLOW + "ItemRand" + ChatColor.WHITE + " :" + ChatColor.GREEN + " Successfully confirm that you read the warning " );
+            return true;
             }
         }
-
+        else{
+            Bukkit.getServer().getLogger().info("[ItemRand] Server/console cannot use command!");
+        }
         return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-        return List.of();
+        if (strings.length == 1) {
+            return Arrays.asList("start", "stop", "setTimer", "help");
+        }
+        return new ArrayList<>();
     }
 }

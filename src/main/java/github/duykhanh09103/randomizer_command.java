@@ -149,8 +149,8 @@ public class randomizer_command implements CommandExecutor, TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("start", "stop", "setTimer", "help"); // Provide options for the first argument
+            return Arrays.asList("start", "stop", "setTimer", "help");
         }
-        return new ArrayList<>(); // No further suggestions
+        return new ArrayList<>();
     }
 }
